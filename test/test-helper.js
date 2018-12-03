@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test'
 
 before(done => {
     console.log("Mongoose is connected to test Atlas remote DB")
-    mongoose.connect("mongodb+srv://admin:admin123@studdit-ggmur.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
+    mongoose.connect("mongodb+srv://Admin:UJIv1hxtOlcMe0Tg@cluster0-md06d.azure.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {
@@ -17,7 +17,16 @@ beforeEach((done) => {
     const {
         users
     } = mongoose.connection.collections;
-    users.drop(() => {
-        done()
+    const testUser = new User ({
+        username: "testUser",
+        password: "123"
     })
+    .then(() =>{
+        users.drop()
+    })
+    .then(() =>{
+        testUser.save()
+    })
+    .then(() => done())
+    .catch(() => done())
 })
