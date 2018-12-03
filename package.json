@@ -7,11 +7,16 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "set NODE_ENV=production&& node server.js",
+    "test": "set NODE_ENV=test&& nodemon --exec mocha --recursive -R min",
+    "testCloud": "set NODE_ENV=testCloud&& nodemon --exec mocha --recursive -R min"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tlgaNotenboom/MtGDeckbuilderNode.git"
+  },
+  "engines": {
+    "node": "10.x"
   },
   "author": "",
   "license": "ISC",
@@ -20,8 +25,11 @@
   },
   "homepage": "https://github.com/tlgaNotenboom/MtGDeckbuilderNode#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "mocha": "^5.2.0",
     "mongoose": "^5.3.14",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.7"
   }
 }
