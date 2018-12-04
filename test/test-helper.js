@@ -36,20 +36,16 @@ beforeEach((done) => {
     })
     users.drop()
     .then(()=>{
-        cards.drop()
-        return
+        return cards.drop()
     })
     .then(() => {
-        decks.drop()
-        return
+        return decks.drop()
     })
     .then(() =>{
-       testUser.save()
-       return
+        return testUser.save()
     })
     .then(()=> {
-        testCreature.save()
-        return
+        return testCreature.save()
     })
     .then(() => done())
     .catch(() => done())
