@@ -16,16 +16,30 @@ before(done => {
 
 beforeEach((done) => {
     const {
-        users
+        users,
+        cards
     } = mongoose.connection.collections;
     const testUser = new User ({
         username: "testUser",
         password: "123"
     })
+    const testCreature = new Card
+    ({
+        cardname: "Willing Test Subject",
+        manaCost: "2/G",
+        type: "Creature",
+        subtype: "Spider Monkey Scientist",
+        power: 2,
+        toughness: 2,
+        cardText: "Reach, Whenever you roll a 4 or higher on a die, put a +1/+1 counter on Willing Test Subject. (6): Roll a six-sided die."
+        })
     users.drop()
+    cards.drop()
     .then(() =>{
         console.log("saving user")
-       return testUser.save()
+       testUser.save()
+       testCreature.save()
+       return
     })
     .then(() => done())
     .catch(() => done())
