@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 const request = require('supertest')
 const app = require('../server')
+const User = require('../src/models/user')
 process.env.NODE_ENV = 'test'
 
 before(done => {
-    console.log("Mongoose is connected to test Atlas remote DB")
+
     mongoose.connect("mongodb+srv://Admin:UJIv1hxtOlcMe0Tg@cluster0-md06d.azure.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
     mongoose.connection
         .once('open', () => done())
@@ -21,12 +22,12 @@ beforeEach((done) => {
         username: "testUser",
         password: "123"
     })
+    users.drop()
     .then(() =>{
-        users.drop()
-    })
-    .then(() =>{
-        testUser.save()
+        console.log("saving user")
+       return testUser.save()
     })
     .then(() => done())
     .catch(() => done())
 })
+ 
