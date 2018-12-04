@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const request = require('supertest')
 const app = require('../server')
 const User = require('../src/models/user')
+const Card = require('../src/models/card')
 process.env.NODE_ENV = 'test'
 
 before(done => {
