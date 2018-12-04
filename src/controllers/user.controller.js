@@ -33,6 +33,9 @@ module.exports = {
         .then((foundUser) => {
             if (foundUser.length === 0) {
                 User.create(userProps)
+                .catch((err) => {
+                    next(new ApiError(err.toString(), 412))
+                })
                 return true;
             } else {
                 next(new ApiError("Username already taken", 409))
