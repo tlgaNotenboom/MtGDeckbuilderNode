@@ -6,16 +6,16 @@ module.exports = {
     getAllDecks(){
 
     },
-    getSpecificDecks(){
+    getSpecificDeck(){
         
     },
-    addDecks(){
+    addDeck(){
         
     },
-    editDecks(){
+    editDeck(){
         
     },
-    removeDecks(){
+    removeDeck(){
         
     }
     
