@@ -41,7 +41,7 @@ beforeEach((done) => {
     })
     .then(() => {
         decks.drop()
-        
+        return
     })
     .then(() =>{
        testUser.save()
