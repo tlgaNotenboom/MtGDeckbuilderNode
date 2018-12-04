@@ -32,11 +32,13 @@ module.exports = {
         })
         .then((foundUser) => {
             if (foundUser.length === 0) {
-                User.create(userProps)
-                .catch((err) => {
-                    next(new ApiError(err.toString(), 412))
-                })
-                return true;
+                if(userProps.password.length > 2){
+                    User.create(userProps)
+                    return true;
+                }else{
+                    next(new ApiError("Password has to be longer than 2 characters", 412))
+                    return false;
+                } 
             } else {
                 next(new ApiError("Username already taken", 409))
                 return false;
