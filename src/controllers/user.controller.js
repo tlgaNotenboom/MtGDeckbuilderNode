@@ -32,8 +32,13 @@ module.exports = {
         })
         .then((foundUser) => {
             if (foundUser.length === 0) {
-                User.create(userProps)
-                return true;
+                if(userProps.password.length > 2){
+                    User.create(userProps)
+                    return true;
+                }else{
+                    next(new ApiError("Password has to be longer than 2 characters", 412))
+                    return false;
+                } 
             } else {
                 next(new ApiError("Username already taken", 409))
                 return false;
@@ -47,15 +52,16 @@ module.exports = {
         })
     },
     removeUser(req, res, next){
-        const userId = req.params.id
+        let userProps = req.body
         User.find({
-            _id: userId
+            username: userProps.username,
+            password: userProps.password
         })
         .then((foundUser) => {
             if(foundUser.length === 0){
                 next(new ApiError("User not found", 422));
             }else{
-                return User.findByIdAndDelete(userId)
+                return User.findByIdAndDelete(userProps)
             }
         })
         .then(() => {
