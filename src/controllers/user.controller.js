@@ -55,7 +55,7 @@ module.exports = {
             if(foundUser.length === 0){
                 next(new ApiError("User not found", 422));
             }else{
-                return Thread.findByIdAndDelete(threadId)
+                return User.findByIdAndDelete(userId)
             }
         })
         .then(() => {
