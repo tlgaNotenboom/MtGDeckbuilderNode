@@ -4,7 +4,7 @@ const Card = require('../models/card');
 
 module.exports = {
     getAllCards(req, res, next){
-
+        
     },
     getSpecificCard(req, res, next){
 
