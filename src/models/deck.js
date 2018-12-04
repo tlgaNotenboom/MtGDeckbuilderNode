@@ -31,3 +31,7 @@ DeckSchema.virtual('Deck size').get(function(){
     }
     return this.deckList.length
 })
+
+const Deck = mongoose.model('deck', DeckSchema);
+
+module.exports = Deck;

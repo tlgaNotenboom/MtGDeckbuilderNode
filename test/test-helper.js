@@ -3,6 +3,7 @@ const request = require('supertest')
 const app = require('../server')
 const User = require('../src/models/user')
 const Card = require('../src/models/card')
+const Deck = require('../src/models/deck')
 process.env.NODE_ENV = 'test'
 
 before(done => {
@@ -34,20 +35,15 @@ beforeEach((done) => {
         toughness: 2,
         cardText: "Reach, Whenever you roll a 4 or higher on a die, put a +1/+1 counter on Willing Test Subject. (6): Roll a six-sided die."
     })
-    users.drop()
-    .then(()=>{
-        return cards.drop()
+    const testDeck = new Deck({
+        deckname: "testDeck"
     })
-    .then(() => {
-        return decks.drop()
+    users.drop(()=>{
+        cards.drop(()=>{
+            decks.drop()
+        })
     })
-    .then(() =>{
-        return testUser.save()
-    })
-    .then(()=> {
-        return testCreature.save()
-    })
-    .then(() => done())
-    .catch(() => done())
+    .then(()=> done())
+    .catch(()=> done())
 })
  
