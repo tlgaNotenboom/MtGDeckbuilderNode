@@ -25,8 +25,7 @@ beforeEach((done) => {
         username: "testUser",
         password: "123"
     })
-    const testCreature = new Card
-    ({
+    const testCreature = new Card({
         cardname: "Willing Test Subject",
         manaCost: "2/G",
         type: "Creature",
@@ -34,15 +33,23 @@ beforeEach((done) => {
         power: 2,
         toughness: 2,
         cardText: "Reach, Whenever you roll a 4 or higher on a die, put a +1/+1 counter on Willing Test Subject. (6): Roll a six-sided die."
-        })
+    })
     users.drop()
-    cards.drop()
-    decks.drop()
+    .then(()=>{
+        cards.drop()
+        return
+    })
+    .then(() => {
+        decks.drop()
+        
+    })
     .then(() =>{
-        console.log("saving user")
        testUser.save()
-       testCreature.save()
        return
+    })
+    .then(()=> {
+        testCreature.save()
+        return
     })
     .then(() => done())
     .catch(() => done())
