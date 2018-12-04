@@ -9,7 +9,7 @@ routes.post("/user", UserController.addUser);
 
 // routes.put("/user/", UserController.changePassword);
 
-routes.delete("/user/", UserController.removeUser);
+routes.delete("/user", UserController.removeUser);
 
 
 module.exports = routes
