@@ -73,18 +73,34 @@ describe('Creating users', () =>{
     })
 })
 describe('Deleting users', () =>{
-    it('should delete a user if the correct id has been given', done => {
-        User.findOne()
+    xit('should delete a user if the correct id has been given', done => {
+        User.findOne({
+            username: "testUser"
+        })
         .then((user) =>{
             request(app)
-            .put("/api/user")
-            .send({
-                username: "testUser",
-                password: "123"
-            })
+            .delete("/api/user")
+            .send({ 
+                _id: user._id,
+                username: user.username,
+                password: user.password
+             })
             .end((err, res) =>{
                 assert(res.status === 200)
             })
+            return user
+        })
+        .then(() => {
+           User.find({
+               username: "testUser"
+           })
+        })
+        .then((foundUsers) => {
+            assert(foundUsers.length === 0)
+            done()
+        })
+        .catch((err) => {
+            done(err)
         })
     })
-})
+})  
