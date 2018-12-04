@@ -17,7 +17,8 @@ before(done => {
 beforeEach((done) => {
     const {
         users,
-        cards
+        cards,
+        decks
     } = mongoose.connection.collections;
     const testUser = new User ({
         username: "testUser",
@@ -35,6 +36,7 @@ beforeEach((done) => {
         })
     users.drop()
     cards.drop()
+    decks.drop()
     .then(() =>{
         console.log("saving user")
        testUser.save()
