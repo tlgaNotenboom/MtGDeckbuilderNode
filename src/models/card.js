@@ -12,21 +12,24 @@ const CardSchema = new Schema ({
     },
     type:{
         type: String,
-        required: [ture, 'Card type is required.']
+        required: [true, 'Card type is required.']
     },
     subtype:{
         type: String
     },
     power:{
-        type: String
+        type: Number
     },
     toughness:{
-        type: String
+        type: Number
     },
     cardText:{
         type: String
     },
     flavorText:{
+        type: String
+    },
+    Art:{
         type: String
     }
 });
