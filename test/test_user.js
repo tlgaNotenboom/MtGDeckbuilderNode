@@ -20,7 +20,6 @@ describe('Creating users', () =>{
             .then((foundUsers)=> {
                 assert(foundUsers.length === 1)
                 assert(res.status === 200)
-                console.log(foundUsers.length)
                 done()
             })
             .catch((err) => {
