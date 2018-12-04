@@ -10,13 +10,9 @@ const morgan = require('morgan')
         Mongoose.connect("mongodb+srv://Admin:UJIv1hxtOlcMe0Tg@cluster0-md06d.azure.mongodb.net/production?retryWrites=true", { useNewUrlParser: true } );
 	}
 
-	
-	
 Mongoose.connection
     .once('open', () => console.log("Mongoose: connection open"))
 	.on("error", (err) => console.warn("Error", err))
-	
-	
 	
 const port = process.env.PORT || 3000
 

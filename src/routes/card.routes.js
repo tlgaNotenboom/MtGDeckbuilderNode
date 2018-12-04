@@ -10,7 +10,7 @@ routes.post("/card", CardController.addCard);
 
 routes.put("/card/:id", CardController.editCard)
 
-routes.delete("/card", CardController.removeCard);
+routes.delete("/card/:id", CardController.removeCard);
 
 
 module.exports = routes
