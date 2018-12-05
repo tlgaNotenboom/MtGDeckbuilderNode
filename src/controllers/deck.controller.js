@@ -3,7 +3,7 @@ const Deck = require('../models/deck');
 
 module.exports = {
 
-    getAllDecks(){
+    getAllDecks(req, res, next){
         Deck.find({}, (err, decks) => {
             if (decks.length !== 0) {
                 res.status(200).send(decks);
@@ -14,7 +14,7 @@ module.exports = {
             next(new ApiError(err.toString(), 400))
         })
     },
-    getSpecificDeck(){
+    getSpecificDeck(req, res, next){
         const deckId = req.params.id;
         Deck.findById({
             _id: deckId
@@ -26,7 +26,7 @@ module.exports = {
             }
         });
     },
-    addDeck(){
+    addDeck(req, res, next){
         const deckProps = req.body
         Deck.find({
             username: deckProps.username,
@@ -48,7 +48,7 @@ module.exports = {
             next(new ApiError(err.toString(), 400))
         }) 
     },
-    editDeck(){
+    editDeck(req, res, next){
         let deckId = req.params.id
         let update = req.body
         Deck.find({
@@ -80,7 +80,7 @@ module.exports = {
             next(new ApiError(err.toString(), 400))
         }) 
     },
-    removeDeck(){
+    removeDeck(req, res, next){
         let deckProps = req.body
         Deck.find({
             username: deckProps.username,
