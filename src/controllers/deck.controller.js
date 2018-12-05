@@ -63,7 +63,7 @@ module.exports = {
                 next(new ApiError("Deck not found", 422));
             }else{
                 return Deck.findByIdAndUpdate({
-                    _id: deckId
+                    _id: update._id
                 },
                 {
                     $set:{
