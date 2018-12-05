@@ -15,9 +15,11 @@ module.exports = {
         })
     },
     getSpecificDeck(req, res, next){
-        const deckId = req.params.id;
-        Deck.findById({
-            _id: deckId
+        let username = req.params.user
+        let deckName = req.params.deckname
+        Deck.find({
+            username: username,
+            deckname: deckName
         }, (err, decks) => {
             if (decks) {
                 res.status(200).send(decks);
@@ -49,10 +51,12 @@ module.exports = {
         }) 
     },
     editDeck(req, res, next){
-        let deckId = req.params.id
+        let username = req.body.username
+        let deckName = req.body.deckname
         let update = req.body
         Deck.find({
-            _id: deckId
+            username: username,
+            deckname: deckName
         })
         .then((foundDeck) => {
             if(foundDeck.length === 0){

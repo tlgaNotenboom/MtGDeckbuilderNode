@@ -15,9 +15,9 @@ module.exports = {
         })
     },
     getSpecificCard(req, res, next){
-        let cardId = req.params.id;
-        Card.findById({
-            _id: cardId
+        let cardname = req.params.cardname;
+        Card.find({
+            cardname: cardname
         }, (err, cards) => {
             if (cards) {
                 res.status(200).send(cards);
@@ -48,17 +48,17 @@ module.exports = {
         })
     },
     editCard(req, res, next){
-        let cardId = req.params.id
+        let cardname = req.body.cardname
         let update = req.body
         Card.find({
-            _id: cardId
+            cardname: cardname
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
                 next(new ApiError("Card not found", 422));
             }else{
                 return Card.findByIdAndUpdate({
-                    _id: cardId
+                    _id: update._id
                 },
                 {
                     $set:{
@@ -86,15 +86,15 @@ module.exports = {
         })
     },
     removeCard(req, res, next){
-        let cardId = req.params.id
+        let cardName = req.body.cardname
         Card.find({
-            _id: cardId
+            cardname: cardName
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
                 next(new ApiError("Card not found", 422));
             }else{
-                return Card.findByIdAndDelete(cardId)
+                return Card.findByIdAndDelete(foundCard._id)
             }
         })
         .then(() => {
