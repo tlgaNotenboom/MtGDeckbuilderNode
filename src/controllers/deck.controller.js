@@ -67,7 +67,6 @@ module.exports = {
                 },
                 {
                     $set:{
-                        _id: update._id,
                         deckname: update.deckname,
                         decklist: update.decklist
                     }    
