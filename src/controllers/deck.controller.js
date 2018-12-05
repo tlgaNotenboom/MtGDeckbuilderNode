@@ -78,7 +78,7 @@ module.exports = {
             }
         })
         .then(() => {
-            res.status(200).send("Deck successfully edited")
+            res.status(200).send(update)
         })
         .catch((err) => {
             next(new ApiError(err.toString(), 400))
