@@ -76,7 +76,7 @@ module.exports = {
             }
         })
         .then(() => {
-            res.status(200).send("Card successfully edited")
+            res.status(200).send(update)
         })
         .catch((err) => {
             next(err)
