@@ -55,23 +55,19 @@ module.exports = {
         .then((foundCard) => {
             if(foundCard.length === 0){
                 throw new ApiError("Card not found", 422);
-            }else{
-                
+            }else{ 
+                console.log(foundCard._id)
                 return Card.findByIdAndUpdate({
                     _id: foundCard._id
                 },
                 {
-                    $set:{
-                        _id: foundCard._id,
-                        cardname: update.cardname,
-                        manaCost: update.manaCost,
-                        type: update.type,
-                        subtype: update.subtype,
-                        power: update.power,
-                        toughness: update.toughness,
-                        cardText: update.cardText,
-                        flavorText: update.flavorText
-                    }    
+                    manaCost: update.manaCost,
+                    type: update.type,
+                    subtype: update.subtype,
+                    power: update.power,
+                    toughness: update.toughness,
+                    cardText: update.cardText,
+                    flavorText: update.flavorText
                 },
                 {
                     runValidators: true,
