@@ -28,6 +28,18 @@ module.exports = {
             }
         });
     },
+    getDeckByUser(req, res, next){
+        let username = req.params.user
+        Deck.find({
+            username: username
+        }, (err, decks) => {
+            if (decks) {
+                res.status(200).send(decks);
+            } else {
+                next(new ApiError("No decks found", 404));
+            }
+        });
+    },
     addDeck(req, res, next){
         const deckProps = req.body
         Deck.find({

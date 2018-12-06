@@ -5,6 +5,7 @@ let DeckController = require('../controllers/deck.controller')
 
 routes.get("/deck", DeckController.getAllDecks);
 routes.get("/deck/:user/:deckname", DeckController.getSpecificDeck)
+routes.get("/deck/:user", DeckController.getDeckByUser)
 
 routes.post("/deck", DeckController.addDeck);
 

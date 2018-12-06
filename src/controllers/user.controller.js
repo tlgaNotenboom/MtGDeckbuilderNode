@@ -14,12 +14,12 @@ module.exports = {
         })
     },
     getSpecificUser(req, res, next){
-        const userId = req.params.id;
-            User.findById({
-                _id: userId
-            }, (err, users) => {
-                if (users) {
-                    res.status(200).send(users);
+        const username = req.params.username;
+            User.findOne({
+                username: username
+            }, (err, user) => {
+                if (user) {
+                    res.status(200).send(user);
                 } else {
                     next(new ApiError("No users found", 404));
                 }
