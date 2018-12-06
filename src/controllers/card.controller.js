@@ -49,11 +49,11 @@ module.exports = {
     editCard(req, res, next){
         let cardname = req.body.cardname
         let update = req.body
-        Card.find({
+        Card.findOne({
             cardname: cardname
         })
         .then((foundCard) => {
-            if(foundCard.length === 0){
+            if(foundCard === undefined){
                 throw new ApiError("Card not found", 422);
             }else{ 
                 console.log(foundCard._id)
