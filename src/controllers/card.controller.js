@@ -62,6 +62,7 @@ module.exports = {
                 },
                 {
                     $set:{
+                        _id: foundCard._id,
                         cardname: update.cardname,
                         manaCost: update.manaCost,
                         type: update.type,
