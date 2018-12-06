@@ -88,7 +88,7 @@ describe('Creating users', () =>{
         })
     })
 })
-describe.only('Deleting users', () =>{
+describe('Deleting users', () =>{
     it('should delete a user if the correct id has been given', done => {
         User.findOne({
             username: "testUser"
