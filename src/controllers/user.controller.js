@@ -7,10 +7,10 @@ module.exports = {
             if (users.length !== 0) {
                 res.status(200).send(users);
             } else {
-                next(new ApiError("No users found", 404));
+                throw new ApiError("No users found", 404)
             }
         }).catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     getSpecificUser(req, res, next){
@@ -32,23 +32,16 @@ module.exports = {
         })
         .then((foundUser) => {
             if (foundUser.length === 0) {
-                if(userProps.password.length > 2){
-                    User.create(userProps)
-                    return true;
-                }else{
-                    next(new ApiError("Password has to be longer than 2 characters", 412))
-                    return false;
-                } 
+                return User.create(userProps)
             } else {
-                next(new ApiError("Username already taken", 409))
-                return false;
+                throw new ApiError("Username already taken", 409)
             }
         })
         .then(()=>{
             res.status(200).send(userProps)
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     removeUser(req, res, next){
@@ -59,13 +52,16 @@ module.exports = {
         })
         .then((foundUser) => {
             if(foundUser.length === 0){
-                next(new ApiError("User not found", 422));
+                throw new ApiError("User not found", 422);
             }else{
-                return User.findByIdAndDelete(userProps)
+                return User.findByIdAndDelete(userProps._id)
             }
         })
         .then(() => {
             res.status(200).send({success: "User successfully deleted!"})
+        })
+        .catch((err) => {
+            next(err)
         })
     }
 }

@@ -8,10 +8,10 @@ module.exports = {
             if (cards.length !== 0) {
                 res.status(200).send(cards);
             } else {
-                next(new ApiError("No cards found", 404));
+                throw new ApiError("No cards found", 404);
             }
         }).catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     getSpecificCard(req, res, next){
@@ -36,15 +36,14 @@ module.exports = {
                 Card.create(cardProps)
                 return true;
             } else {
-                next(new ApiError("Card \""+cardProps.cardname+"\" already added", 409))
-                return false;
+                throw new ApiError("Card \""+cardProps.cardname+"\" already added", 409)
             }
         })
         .then(()=>{
             res.status(200).send(cardProps)
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     editCard(req, res, next){
@@ -55,7 +54,7 @@ module.exports = {
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
-                next(new ApiError("Card not found", 422));
+                throw new ApiError("Card not found", 422);
             }else{
                 return Card.findByIdAndUpdate({
                     _id: update._id
@@ -82,7 +81,7 @@ module.exports = {
             res.status(200).send("Card successfully edited")
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     removeCard(req, res, next){
@@ -92,7 +91,7 @@ module.exports = {
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
-                next(new ApiError("Card not found", 422));
+                throw new ApiError("Card not found", 422);
             }else{
                 return Card.findByIdAndDelete(foundCard._id)
             }
@@ -101,7 +100,7 @@ module.exports = {
             res.status(200).send({success: "Card successfully deleted"})
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     }
 }

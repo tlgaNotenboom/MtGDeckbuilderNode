@@ -7,12 +7,12 @@ const Deck = require('../src/models/deck')
 process.env.NODE_ENV = 'test'
 
 before(done => {
-
     mongoose.connect("mongodb+srv://Thomas:123@cluster0-md06d.azure.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {
             console.warn('Warning', err);
+            done(err)
         });
 });
 
@@ -40,16 +40,13 @@ beforeEach((done) => {
     })
     mongoose.connection.db.dropDatabase()
     .then(()=>{
-       users.insertOne(testUser)
-       return
+       return users.insertOne(testUser)
     })
     .then(()=>{
-        cards.insertOne(testCreature)
-        return
+        return cards.insertOne(testCreature)
     })
     .then(()=>{
-        decks.insertOne(testDeck)
-        return
+        return decks.insertOne(testDeck)
     })
     .then(()=>{
         done()

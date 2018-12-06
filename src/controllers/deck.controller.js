@@ -8,10 +8,10 @@ module.exports = {
             if (decks.length !== 0) {
                 res.status(200).send(decks);
             } else {
-                next(new ApiError("No decks found", 404));
+                throw new ApiError("No decks found", 404);
             }
         }).catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         })
     },
     getSpecificDeck(req, res, next){
@@ -48,18 +48,16 @@ module.exports = {
         })
         .then((foundDeck) => {
             if (foundDeck.length === 0) {
-                Deck.create(deckProps)
-                return true;
+                return Deck.create(deckProps)
             } else {
-                next(new ApiError("Deckname already taken", 409))
-                return false;
+                throw new ApiError("Deckname already taken", 409);
             }
         })
         .then(()=>{
             res.status(200).send(deckProps)
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         }) 
     },
     editDeck(req, res, next){
@@ -72,7 +70,7 @@ module.exports = {
         })
         .then((foundDeck) => {
             if(foundDeck.length === 0){
-                next(new ApiError("Deck not found", 422));
+                throw new ApiError("Deck not found", 422);
             }else{
                 return Deck.findByIdAndUpdate({
                     _id: foundDeck[0]._id
@@ -93,7 +91,7 @@ module.exports = {
             res.status(200).send(update)
         })
         .catch((err) => {
-            next(new ApiError(err.toString(), 400))
+            next(err)
         }) 
     },
     removeDeck(req, res, next){
@@ -104,13 +102,16 @@ module.exports = {
         })
         .then((foundDeck) => {
             if(foundDeck.length === 0){
-                next(new ApiError("Deck not found", 422));
+                throw new ApiError("Deck not found", 422);
             }else{
                 return Deck.findByIdAndDelete(deckProps)
             }
         })
         .then(() => {
             res.status(200).send({success: "Deck successfully deleted!"})
+        })
+        .catch((err) => {
+            next(err)
         })
     }
     
