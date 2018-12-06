@@ -58,7 +58,7 @@ module.exports = {
             }
         })
         .then(() => {
-            res.status(200).send({success: "User successfully deleted!"})
+            res.status(200).send("User successfully deleted!")
         })
         .catch((err) => {
             next(err)
