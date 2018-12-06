@@ -39,8 +39,8 @@ describe('Creating users', () =>{
                 password: "456"
             })
             .then((foundUsers)=> {
-                assert(foundUsers.length === 0)
                 assert(res.status === 409)
+                assert(foundUsers.length === 0)
                 done()
             })
             .catch((err) => {

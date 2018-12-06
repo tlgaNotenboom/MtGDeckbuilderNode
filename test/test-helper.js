@@ -8,7 +8,7 @@ process.env.NODE_ENV = 'test'
 
 before(done => {
 
-    mongoose.connect("mongodb+srv://Admin:UJIv1hxtOlcMe0Tg@cluster0-md06d.azure.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
+    mongoose.connect("mongodb+srv://Thomas:123@cluster0-md06d.azure.mongodb.net/test?retryWrites=true", { useNewUrlParser: true } );
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {
@@ -27,23 +27,34 @@ beforeEach((done) => {
         password: "123"
     })
     const testCreature = new Card({
-        cardname: "Willing Test Subject",
+        cardname: "Test Creature",
         manaCost: "2/G",
         type: "Creature",
-        subtype: "Spider Monkey Scientist",
+        subtype: "testCreature",
         power: 2,
         toughness: 2,
-        cardText: "Reach, Whenever you roll a 4 or higher on a die, put a +1/+1 counter on Willing Test Subject. (6): Roll a six-sided die."
+        cardText: "If tested, win"
     })
     const testDeck = new Deck({
         deckname: "testDeck"
     })
-    users.drop(()=>{
-        cards.drop(()=>{
-            decks.drop()
-        })
+    mongoose.connection.db.dropDatabase()
+    .then(()=>{
+       users.insertOne(testUser)
+       return
     })
-    .then(()=> done())
-    .catch(()=> done())
+    .then(()=>{
+        cards.insertOne(testCreature)
+        return
+    })
+    .then(()=>{
+        decks.insertOne(testDeck)
+        return
+    })
+    .then(()=>{
+        done()
+    })
+    .catch((err)=>{
+        done(err)
+    })
 })
- 
