@@ -8,9 +8,9 @@ routes.get("/card/:cardname", CardController.getSpecificCard)
 
 routes.post("/card", CardController.addCard);
 
-routes.put("/card/", CardController.editCard)
+routes.put("/card", CardController.editCard)
 
-routes.delete("/card/", CardController.removeCard);
+routes.delete("/card", CardController.removeCard);
 
 
 module.exports = routes
