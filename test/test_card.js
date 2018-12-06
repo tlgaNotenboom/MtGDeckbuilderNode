@@ -36,7 +36,7 @@ describe('Creating a card', ()=>{
                 done(err)
             })
         })
-    })
+    }),
     it('should return status 409 if the cardname already exists', done =>{
         request(app)
         .post('/api/card')
@@ -54,6 +54,36 @@ describe('Creating a card', ()=>{
             .then((foundCards)=> {
                 assert(foundCards.length === 0)
                 assert(res.status === 409)
+                done()
+            })
+            .catch((err) => {
+                done(err)
+            })
+        })
+    })
+}),
+describe.only('Editing a card', ()=>{
+    it('Should edit a card', done =>{
+        request(app)
+        .put('/api/card')
+        .send({
+            cardname: "Test Creature",
+            manaCost: "10",
+            type: "edited Enchantment",
+            subtype: "edited Aura",
+            cardText: "If edited with a status code 200, win"
+        })
+        .end((err, res) =>{
+            Card.find({
+                cardname: "Test Creature",
+                manaCost: "10",
+                type: "edited Enchantment",
+                subtype: "edited Aura",
+                cardText: "If edited with a status code 200, win"
+            })
+            .then((foundCards)=> {
+                assert(foundCards.length === 1)
+                assert(res.status === 200)
                 done()
             })
             .catch((err) => {

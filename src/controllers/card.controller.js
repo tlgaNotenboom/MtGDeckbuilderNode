@@ -56,8 +56,9 @@ module.exports = {
             if(foundCard.length === 0){
                 throw new ApiError("Card not found", 422);
             }else{
+                
                 return Card.findByIdAndUpdate({
-                    _id: update._id
+                    _id: foundCard._id
                 },
                 {
                     $set:{
