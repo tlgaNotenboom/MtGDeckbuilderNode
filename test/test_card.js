@@ -92,7 +92,7 @@ describe('Editing a card', ()=>{
         })
     })
 }),
-describe.only('Deleting a card', ()=>{
+xdescribe('Deleting a card', ()=>{
     it('Should delete a card when correct', done =>{
         request(app)
         .delete('/api/card')

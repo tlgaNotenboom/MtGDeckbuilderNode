@@ -42,9 +42,21 @@ module.exports = {
     },
     addDeck(req, res, next){
         const deckProps = req.body
-        Deck.find({
-            username: deckProps.username,
-            deckname: deckProps.deckname
+        User.find({
+            username: deckProps.username
+        })
+        .then((founduser)=>{
+            if(founduser.length === 0){
+                throw new ApiError("User not found", 422);
+            }else{
+                return
+            }
+        })
+        .then(()=>{
+            return Deck.find({
+                username: deckProps.username,
+                deckname: deckProps.deckname
+            })
         })
         .then((foundDeck) => {
             if (foundDeck.length === 0) {

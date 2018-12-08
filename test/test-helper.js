@@ -36,6 +36,7 @@ beforeEach((done) => {
         cardText: "If tested, win"
     })
     const testDeck = new Deck({
+        username: "testUser",
         deckname: "testDeck"
     })
     mongoose.connection.db.dropDatabase()
