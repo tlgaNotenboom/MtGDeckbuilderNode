@@ -31,7 +31,7 @@ DeckSchema.virtual('Deck size').get(function(){
     }
     return this.deckList.length
 })
-
+DeckSchema.plugin(require('mongoose-autopopulate'))
 const Deck = mongoose.model('deck', DeckSchema);
 
 module.exports = Deck;

@@ -1,5 +1,6 @@
 const ApiError = require('../ApiError')
 const Card = require('../models/card');
+const Deck = require('../models/deck')
 
 
 module.exports = {
@@ -43,6 +44,35 @@ module.exports = {
             res.status(200).send(cardProps)
         })
         .catch((err) => {
+            next(err)
+        })
+    },
+    addCardToDeck(req, res, next){
+        const cardProps = req.body
+        Deck.find({
+            username: req.params.username,
+            deckname: req.params.deckname
+        })
+        .then((foundDeck)=>{
+            if(foundDeck.length === 0){
+                throw new ApiError("No decks found", 404)
+            }else{
+                return
+            }
+        })
+        .then(()=>{
+            return Card.create(cardProps)
+        })
+        .then((card)=>{
+         Deck.findByIdAndUpdate(cardProps.deck, {
+             $push: {
+                 decklist: card._id
+             }
+         })
+         .then(()=>{
+            res.status(200).send(card)
+         })
+        }).catch((err) => {
             next(err)
         })
     },

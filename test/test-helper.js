@@ -37,7 +37,16 @@ beforeEach((done) => {
     })
     const testDeck = new Deck({
         username: "testUser",
-        deckname: "testDeck"
+        deckname: "testDeck",
+        decklist:[{
+            cardname: "Test Creature",
+            manaCost: "2/G",
+            type: "Creature",
+            subtype: "testCreature",
+            power: 2,
+            toughness: 2,
+            cardText: "If tested, win"
+        }]
     })
     mongoose.connection.db.dropDatabase()
     .then(()=>{
