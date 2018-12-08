@@ -50,11 +50,11 @@ module.exports = {
     addCardToDeck(req, res, next){
         const cardProps = req.body
         Deck.find({
-            username: req.params.username,
+            username: req.params.user,
             deckname: req.params.deckname
         })
-        .then((foundDeck)=>{
-            if(foundDeck.length === 0){
+        .then((foundDecks)=>{
+            if(foundDecks.length === 0){
                 throw new ApiError("No decks found", 404)
             }else{
                 return
