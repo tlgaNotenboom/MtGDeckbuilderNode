@@ -83,9 +83,9 @@ module.exports = {
         })
     },
     removeCard(req, res, next){
-        let cardName = req.body.cardname
+        let cardProps = req.body
         Card.find({
-            cardname: cardName
+            cardname: cardProps.cardname
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
@@ -95,7 +95,7 @@ module.exports = {
             }
         })
         .then(() => {
-            res.status(200).send({success: "Card successfully deleted"})
+            res.status(200).send("Card successfully deleted!")
         })
         .catch((err) => {
             next(err)

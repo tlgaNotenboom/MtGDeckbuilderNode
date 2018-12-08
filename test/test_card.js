@@ -62,7 +62,7 @@ describe('Creating a card', ()=>{
         })
     })
 }),
-describe.only('Editing a card', ()=>{
+describe('Editing a card', ()=>{
     it('Should edit a card', done =>{
         request(app)
         .put('/api/card')
@@ -90,5 +90,28 @@ describe.only('Editing a card', ()=>{
                 done(err)
             })
         })
+    })
+}),
+describe.only('Deleting a card', ()=>{
+    it('Should delete a card when correct', done =>{
+        request(app)
+        .delete('/api/card')
+        .send({
+            cardname:"Test Creature"
+        })
+        .end((err, res)=>{
+            Card.find({
+                cardname: "Test Creature"
+            })
+            .then((foundcards)=>{
+                assert(foundcards.length === 0)
+                assert(res.status === 200)
+                done()
+            })
+            .catch((err) => {
+                done(err)
+            })
+        })
+
     })
 })
