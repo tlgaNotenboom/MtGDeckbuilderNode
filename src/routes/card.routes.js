@@ -8,7 +8,7 @@ routes.get("/card/:cardname", CardController.getSpecificCard)
 
 routes.post("/card", CardController.addCard);
 
-routes.post("/card/:user/:deckname". CardController.addCardToDeck)
+routes.post("/card/:user/:deckname", CardController.addCardToDeck)
 
 routes.put("/card", CardController.editCard)
 
