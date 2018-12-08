@@ -1,5 +1,6 @@
 const ApiError = require('../ApiError')
 const Deck = require('../models/deck');
+const User = require('../models/user')
 
 module.exports = {
 
