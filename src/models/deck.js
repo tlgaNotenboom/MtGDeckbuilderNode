@@ -25,7 +25,7 @@ const DeckSchema = new Schema ({
     }
 });
 
-DeckSchema.virtual('Decksize').get(function(){
+DeckSchema.virtual('decksize').get(function(){
     if(this.deckList === undefined){
         return 0;
     }
