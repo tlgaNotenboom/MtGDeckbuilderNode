@@ -74,8 +74,6 @@ module.exports = {
         }) 
     },
     editDeck(req, res, next){
-        let username = req.body.username
-        let deckName = req.body.deckname
         let update = req.body
         Deck.find({
             username: username,
@@ -89,7 +87,7 @@ module.exports = {
                     _id: foundDeck[0]._id
                 },
                 {
-                    $set:{
+                    $push:{
                         deckname: update.deckname,
                         decklist: update.decklist
                     }    
