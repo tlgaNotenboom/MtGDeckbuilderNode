@@ -14,9 +14,11 @@ module.exports = {
         })
     },
     getSpecificUser(req, res, next){
-        const username = req.params.username;
+        const username = req.body.username;
+        const password = req.body.password;
             User.findOne({
-                username: username
+                username: username,
+                password: password
             }, (err, user) => {
                 if (user) {
                     res.status(200).send(user);
