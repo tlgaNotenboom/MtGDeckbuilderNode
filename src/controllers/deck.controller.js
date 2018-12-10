@@ -76,8 +76,8 @@ module.exports = {
     editDeck(req, res, next){
         let update = req.body
         Deck.find({
-            username: username,
-            deckname: deckName
+            username: update.username,
+            deckname: update.deckname
         })
         .then((foundDeck) => {
             if(foundDeck.length === 0){
