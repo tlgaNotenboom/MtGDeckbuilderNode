@@ -87,8 +87,10 @@ module.exports = {
                     _id: foundDeck[0]._id
                 },
                 {
-                    $push:{
+                    $set:{
                         deckname: update.deckname,
+                    },
+                    $push:{
                         decklist: update.decklist
                     }    
                 },
