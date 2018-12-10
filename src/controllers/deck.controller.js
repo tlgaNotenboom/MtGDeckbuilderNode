@@ -88,7 +88,7 @@ module.exports = {
                 },
                 {
                     $push:{
-                        decklist: update.decklist
+                        deckList: update.decklist
                     }    
                 },
                 {

@@ -33,8 +33,6 @@ const CardSchema = new Schema ({
         type: String
     }
 });
-
-CardSchema.plugin(require('mongoose-autopopulate'))
 const Card = mongoose.model('card', CardSchema);
 
 module.exports = Card;
