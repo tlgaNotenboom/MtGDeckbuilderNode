@@ -86,7 +86,7 @@ module.exports = {
                 return Deck.findByIdAndUpdate(
                 foundDeck[0]._id,
                 {
-                    $push:{
+                    $addToSet:{
                         deckList: update.deckList
                     }    
                 },
