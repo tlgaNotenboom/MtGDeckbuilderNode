@@ -1,7 +1,7 @@
 const ApiError = require('../ApiError')
 const Deck = require('../models/deck');
 const User = require('../models/user')
-
+const Card = require('../models/card')
 module.exports = {
 
     getAllDecks(req, res, next){
