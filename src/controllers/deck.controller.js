@@ -80,9 +80,7 @@ module.exports = {
             deckname: update.deckname
         },
         {
-            $addToSet:{
-                deckList: update.deckList
-            }    
+            deckList: update.deckList    
         })
         .then(() => {
             res.status(200).send(update)
