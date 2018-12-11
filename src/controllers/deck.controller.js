@@ -75,27 +75,14 @@ module.exports = {
     },
     editDeck(req, res, next){
         let update = req.body
-        Deck.find({
+        Deck.updateOne({
             username: update.username,
             deckname: update.deckname
-        })
-        .then((foundDeck) => {
-            if(foundDeck.length === 0){
-                throw new ApiError("Deck not found", 422);
-            }else{
-                console.log(update.deckList[0])
-                return Deck.findByIdAndUpdate(
-                foundDeck[0]._id,
-                {
-                    $addToSet:{
-
-                        deckList: update.deckList[0]
-                    }    
-                },
-                {
-                    new: true
-                })
-            }
+        },
+        {
+            $addToSet:{
+                deckList: update.deckList
+            }    
         })
         .then(() => {
             res.status(200).send(update)
