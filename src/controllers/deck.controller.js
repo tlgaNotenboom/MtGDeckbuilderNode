@@ -82,28 +82,21 @@ module.exports = {
             }
         },{
             _id: 1
-        }
-        )
+        })
         .then((foundIds) => {
             console.log(foundIds)
-            // if(foundIds.length === 0){
-            //     throw new ApiError("Deck not found", 422);
-            // }else{
-            //     console.log(update.deckList[0])
-            //     return Deck.findByIdAndUpdate(
-            //     foundDeck[0]._id,
-            //     {
-            //         // $addToSet:{
-            //         //     deckList: update.deckList[0]
-            //         // }    
-            //     },
-            //     {
-            //         new: true
-            //     })
-            // }
+            return Deck.findOneAndUpdate({
+                username: update.username,
+                deckname: update.deckname
+            },{
+                deckList: foundIds
+            },{
+                new: true
+            })
         })
-        .then(() => {
-            res.status(200).send(update)
+        .then((updatedDeck) => {
+            console.log(updatedDeck)
+            res.status(200).send(updatedDeck)
         })
         .catch((err) => {
             next(err)
