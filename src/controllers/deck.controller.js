@@ -87,7 +87,8 @@ module.exports = {
                 foundDeck[0]._id,
                 {
                     $addToSet:{
-                        deckList: update.deckList
+
+                        deckList: update.deckList[0]
                     }    
                 },
                 {
