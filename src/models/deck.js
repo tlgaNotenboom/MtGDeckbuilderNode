@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const CardSchema = require('./card')
 const DeckSchema = new Schema ({
     username: {
         type: String,
@@ -11,9 +11,7 @@ const DeckSchema = new Schema ({
         required: [true, 'Deck name is required.']
     },
     deckList:[{
-        type: Schema.Types.ObjectId, 
-        ref: 'card',
-        autopopulate: true
+        type: CardSchema
     }]
 },
 {
