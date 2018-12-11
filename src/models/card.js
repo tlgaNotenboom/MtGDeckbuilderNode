@@ -18,10 +18,10 @@ const CardSchema = new Schema ({
         type: String
     },
     power:{
-        type: Number
+        type: String
     },
     toughness:{
-        type: Number
+        type: String
     },
     cardText:{
         type: String
