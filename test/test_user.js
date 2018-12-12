@@ -12,6 +12,7 @@ describe('Getting users', ()=>{
             User.find()
             .then((foundUsers)=>{
                 assert(foundUsers.length === res.body.length)
+                assert(res.status === 200)
                 done()
             })
             .catch((err) => {

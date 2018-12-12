@@ -203,4 +203,22 @@ describe('Deleting a deck', ()=>{
             })
         })
     })
+    it('should return a 422 if the user does not exist', done =>{
+        request(app)
+        .get('/api/deck/nonExistingUser')
+        .end((err, res) => {
+                assert(res.body.message ==="No decks found")
+                assert(res.status === 404)
+                done()
+            })
+        })
+    it('should return a 422 if the deck does not exist', done =>{
+        request(app)
+        .get('/api/deck/testUser/nonExistingDeck')
+        .end((err, res) => {
+                assert(res.body.message ==="No decks found")
+                assert(res.status === 404)
+                done()
+            })
+        })    
 })
