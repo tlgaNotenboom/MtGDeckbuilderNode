@@ -22,7 +22,7 @@ module.exports = {
             username: username,
             deckname: deckName
         }, (err, decks) => {
-            if (decks) {
+            if (decks.length !== 0) {
                 res.status(200).send(decks);
             } else {
                 next(new ApiError("No decks found", 404));
@@ -34,7 +34,7 @@ module.exports = {
         Deck.find({
             username: username
         }, (err, decks) => {
-            if (decks) {
+            if (decks.length !== 0) {
                 res.status(200).send(decks);
             } else {
                 next(new ApiError("No decks found", 404));
