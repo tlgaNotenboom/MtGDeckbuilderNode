@@ -110,7 +110,7 @@ module.exports = {
             if(foundDeck.length === 0){
                 throw new ApiError("Deck not found", 422);
             }else{
-                return Deck.findByIdAndDelete(foundDeck._id)
+                return Deck.findByIdAndDelete(foundDeck[0]._id)
             }
         })
         .then(() => {
