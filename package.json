@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "set NODE_ENV=production&& node server.js",
-    "test": "set NODE_ENV=test&& nodemon --exec mocha",
+    "test": "set NODE_ENV=test&& nodemon --exec mocha --timeout 5000",
     "testCloud": "set NODE_ENV=testCloud&& nodemon --exec mocha --recursive -R min"
   },
   "repository": {

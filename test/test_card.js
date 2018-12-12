@@ -41,7 +41,7 @@ describe('Creating a card', ()=>{
         request(app)
         .post('/api/card')
         .send({
-            cardname: "Test Creature",
+            cardname: "Test Creature1",
             manaCost: "0",
             type: "Enchantment",
             subtype: "Aura",
@@ -67,7 +67,7 @@ describe('Editing a card', ()=>{
         request(app)
         .put('/api/card')
         .send({
-            cardname: "Test Creature",
+            cardname: "Test Creature1",
             manaCost: "10",
             type: "edited Enchantment",
             subtype: "edited Aura",
@@ -75,7 +75,7 @@ describe('Editing a card', ()=>{
         })
         .end((err, res) =>{
             Card.find({
-                cardname: "Test Creature",
+                cardname: "Test Creature1",
                 manaCost: "10",
                 type: "edited Enchantment",
                 subtype: "edited Aura",
@@ -91,27 +91,27 @@ describe('Editing a card', ()=>{
             })
         })
     })
-}),
-xdescribe('Deleting a card', ()=>{
-    it('Should delete a card when correct', done =>{
-        request(app)
-        .delete('/api/card')
-        .send({
-            cardname:"Test Creature"
-        })
-        .end((err, res)=>{
-            Card.find({
-                cardname: "Test Creature"
-            })
-            .then((foundcards)=>{
-                assert(foundcards.length === 0)
-                assert(res.status === 200)
-                done()
-            })
-            .catch((err) => {
-                done(err)
-            })
-        })
-
-    })
 })
+// describe('Deleting a card', ()=>{
+//     it('Should delete a card when correct', done =>{
+//         request(app)
+//         .delete('/api/card')
+//         .send({
+//             cardname:"Test Creature"
+//         })
+//         .end((err, res)=>{
+//             Card.find({
+//                 cardname: "Test Creature"
+//             })
+//             .then((foundcards)=>{
+//                 assert(foundcards.length === 0)
+//                 assert(res.status === 200)
+//                 done()
+//             })
+//             .catch((err) => {
+//                 done(err)
+//             })
+//         })
+
+//     })
+// })

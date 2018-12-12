@@ -66,8 +66,9 @@ module.exports = {
                 throw new ApiError("Deckname already taken", 409);
             }
         })
-        .then(()=>{
-            res.status(200).send(deckProps)
+        .then((result)=>{
+            console.log(result)
+            res.status(200).send(result)
         })
         .catch((err) => {
             next(err)

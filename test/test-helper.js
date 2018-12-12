@@ -26,8 +26,17 @@ beforeEach((done) => {
         username: "testUser",
         password: "123"
     })
-    const testCreature = new Card({
-        cardname: "Test Creature",
+    const testCreature1 = new Card({
+        cardname: "Test Creature1",
+        manaCost: "2/G",
+        type: "Creature",
+        subtype: "testCreature",
+        power: 2,
+        toughness: 2,
+        cardText: "If tested, win"
+    })
+    const testCreature2 = new Card({
+        cardname: "Test Creature2",
         manaCost: "2/G",
         type: "Creature",
         subtype: "testCreature",
@@ -38,7 +47,7 @@ beforeEach((done) => {
     const testDeck = new Deck({
         username: "testUser",
         deckname: "testDeck",
-        decklist:[{
+        deckList:[{
             cardname: "Test Creature",
             manaCost: "2/G",
             type: "Creature",
@@ -53,7 +62,10 @@ beforeEach((done) => {
        return users.insertOne(testUser)
     })
     .then(()=>{
-        return cards.insertOne(testCreature)
+        return cards.insertOne(testCreature1)
+    })
+    .then(()=>{
+        return cards.insertOne(testCreature2)
     })
     .then(()=>{
         return decks.insertOne(testDeck)
