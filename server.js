@@ -25,18 +25,16 @@ app.use(bodyParser.json())
 app.use(morgan("dev"));
 
 app.use(function(req, res, next) {
-    if (req.headers.origin === 'http://localhost:4200' || req.headers.origin === 'https://client-side-deckbuilder-app.herokuapp.com') {
-        res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || req.headers.origin)
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-        res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOW_ORIGIN || 'https://client-side-deckbuilder-app.herokuapp.com' ||'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     
-        if (req.method === 'OPTIONS') {
-            res.status(200);
-            res.end();
-        } else {
-            next();
-        }
+    if (req.method === 'OPTIONS') {
+        res.status(200);
+        res.end();
+    } else {
+        next();
     }
 });
 
