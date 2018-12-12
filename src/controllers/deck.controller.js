@@ -50,14 +50,11 @@ module.exports = {
             if(founduser.length === 0){
                 throw new ApiError("User not found", 422);
             }else{
-                return
+                return Deck.find({
+                    username: deckProps.username,
+                    deckname: deckProps.deckname
+                })
             }
-        })
-        .then(()=>{
-            return Deck.find({
-                username: deckProps.username,
-                deckname: deckProps.deckname
-            })
         })
         .then((foundDeck) => {
             if (foundDeck.length === 0) {
