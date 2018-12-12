@@ -113,8 +113,9 @@ module.exports = {
                 return Deck.findByIdAndDelete(foundDeck[0]._id)
             }
         })
-        .then(() => {
-            res.status(200).send({success: "Deck successfully deleted!"})
+        .then((result) => {
+            console.log(result)
+            res.status(200).send(result)
         })
         .catch((err) => {
             next(err)
