@@ -92,7 +92,7 @@ module.exports = {
             if(foundCard.length === 0){
                 throw new ApiError("Card not found", 422);
             }else{
-                return Card.findByIdAndDelete(foundCard._id)
+                return Card.findOneAndDelete(foundCard._id)
             }
         })
         .then(() => {
