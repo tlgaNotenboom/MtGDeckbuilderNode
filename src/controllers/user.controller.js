@@ -28,23 +28,28 @@ module.exports = {
             });
     },
     addUser(req, res, next){
-        const userProps = req.body
-        User.find({
-            username: userProps.username
-        })
-        .then((foundUser) => {
-            if (foundUser.length === 0) {
-                return User.create(userProps)
-            } else {
-                throw new ApiError("Username already taken", 409)
-            }
-        })
-        .then(()=>{
-            res.status(200).send(userProps)
-        })
-        .catch((err) => {
-            next(err)
-        })
+        if(req.body.password == req.body.password2){
+            delete req.body.password2;
+            const userProps = req.body;
+            User.find({
+                username: userProps.username
+            })
+            .then((foundUser) => {
+                if (foundUser.length === 0) {
+                    return User.create(userProps)
+                } else {
+                    throw new ApiError("Username already taken", 409)
+                }
+            })
+            .then(()=>{
+                res.status(200).send(userProps)
+            })
+            .catch((err) => {
+                next(err)
+            })
+        }else{
+            throw new ApiError("Passwords do not match", 400)
+        }
     },
     removeUser(req, res, next){
         let userProps = req.body
