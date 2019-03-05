@@ -84,9 +84,9 @@ module.exports = {
         })
     },
     removeCard(req, res, next){
-        let cardProps = req.body
+        let cardId = req.params._id
         Card.find({
-            cardname: cardProps.cardname
+            _id: cardId
         })
         .then((foundCard) => {
             if(foundCard.length === 0){
