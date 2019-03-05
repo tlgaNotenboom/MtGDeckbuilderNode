@@ -84,7 +84,7 @@ module.exports = {
         })
     },
     removeCard(req, res, next){
-        let cardId = req.params._id
+        let cardId = req.params.id
         Card.find({
             _id: cardId
         })
