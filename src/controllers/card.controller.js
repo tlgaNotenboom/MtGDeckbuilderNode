@@ -83,23 +83,23 @@ module.exports = {
             next(err)
         })
     },
-    removeCard(req, res, next){
-        let cardId = req.params.id
-        Card.find({
-            _id: cardId
-        })
-        .then((foundCard) => {
-            if(foundCard.length === 0){
-                throw new ApiError("Card not found", 422);
-            }else{
-                return Card.findOneAndDelete(foundCard._id)
-            }
-        })
-        .then(() => {
-            res.status(200).send("Card successfully deleted!")
-        })
-        .catch((err) => {
-            next(err)
-        })
-    }
+    // removeCard(req, res, next){
+    //     let cardId = req.params.id
+    //     Card.find({
+    //         _id: cardId
+    //     })
+    //     .then((foundCard) => {
+    //         if(foundCard.length === 0){
+    //             throw new ApiError("Card not found", 422);
+    //         }else{
+    //             return Card.findOneAndDelete(foundCard._id)
+    //         }
+    //     })
+    //     .then(() => {
+    //         res.status(200).send("Card successfully deleted!")
+    //     })
+    //     .catch((err) => {
+    //         next(err)
+    //     })
+    // }
 }
