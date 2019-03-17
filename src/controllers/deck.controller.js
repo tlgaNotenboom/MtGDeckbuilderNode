@@ -5,15 +5,14 @@ const Card = require('../models/card')
 module.exports = {
 
     getAllDecks(req, res, next){
-        Deck.find({}, (err, decks) => {
+        Deck.find({})
+        .then((decks)=>{
             if (decks.length !== 0) {
                 res.status(200).send(decks);
             } else {
                 throw new ApiError("No decks found", 404);
             }
-        }).catch((err) => {
-            next(err)
-        })
+        }).catch(next)
     },
     getSpecificDeck(req, res, next){
         let username = req.params.user
@@ -21,13 +20,13 @@ module.exports = {
         Deck.find({
             username: username,
             deckname: deckName
-        }, (err, decks) => {
-            if (decks.length !== 0) {
-                res.status(200).send(decks);
+        }, (err, deck) => {
+            if (deck.length !== 0) {
+                res.status(200).send(deck);
             } else {
                 next(new ApiError("No decks found", 404));
             }
-        });
+        }).catch(next)
     },
     getDeckByUser(req, res, next){
         let username = req.params.user
@@ -39,7 +38,7 @@ module.exports = {
             } else {
                 next(new ApiError("No decks found", 404));
             }
-        });
+        }).catch(next)
     },
     addDeck(req, res, next){
         const deckProps = req.body
@@ -67,19 +66,41 @@ module.exports = {
             console.log(result)
             res.status(200).send(result)
         })
-        .catch((err) => {
-            next(err)
-        }) 
+        .catch(next) 
     },
     editDeck(req, res, next){
         let update = req.body
         let cardnames = update.deckList.map(card => card.cardname)
-        Card.find({
-            cardname:{
-                $in: cardnames
+        User.findOne({
+            username: update.username
+        }, (err, user) => {
+            if (user) {
+                console.log(user)
+                return
+            } else {
+                next(new ApiError("User not found", 404));
             }
-        },{
-            _id: 1
+        })
+        .then(()=>{
+            return Deck.find({
+                username: update.username,
+                deckname: update.deckname
+            }, (err, deck) => {
+                if (deck.length !== 0) {
+                    return
+                } else {
+                    next(new ApiError("Deck not found", 404));
+                }
+            })
+        })
+        .then(()=>{
+            return Card.find({
+                cardname:{
+                    $in: cardnames
+                }
+            },{
+                _id: 1
+            })
         })
         .then((foundIds) => {
             console.log(foundIds)
@@ -96,9 +117,7 @@ module.exports = {
             console.log(updatedDeck)
             res.status(200).send(updatedDeck)
         })
-        .catch((err) => {
-            next(err)
-        }) 
+        .catch(next) 
     },
     removeDeck(req, res, next){
         let deckProps = req.body

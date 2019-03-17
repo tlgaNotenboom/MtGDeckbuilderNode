@@ -7,7 +7,7 @@ routes.post("/user/login", UserController.getSpecificUser)
 
 routes.post("/user", UserController.addUser);
 
-// routes.put("/user/", UserController.changePassword);
+routes.put("/user/", UserController.editUser);
 
 routes.delete("/user", UserController.removeUser);
 
