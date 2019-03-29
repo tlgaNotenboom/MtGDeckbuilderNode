@@ -22,7 +22,7 @@ module.exports = {
                 if (user) {
                     res.status(200).send(user);
                 } else {
-                    next(new ApiError("No users found", 404));
+                    next(new ApiError("User not found", 404));
                 }
             }).catch(next);
     },
@@ -48,6 +48,9 @@ module.exports = {
             })
         }else{
             throw new ApiError("Passwords do not match", 400)
+            .catch((err)=>{
+                next(err)
+            })
         }
     },
     editUser(req, res, next){
