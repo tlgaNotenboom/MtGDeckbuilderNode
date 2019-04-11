@@ -3,7 +3,6 @@ let routes = express.Router();
 let UserController = require('../controllers/user.controller')
 
 routes.get("/user", UserController.getAllUsers);
-routes.post("/user/login", UserController.getSpecificUser)
 
 routes.post("/user", UserController.addUser);
 

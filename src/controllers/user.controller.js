@@ -12,20 +12,6 @@ module.exports = {
             }
         }).catch(next)
     },
-    getSpecificUser(req, res, next){
-        const username = req.body.username;
-        const password = req.body.password;
-            User.findOne({
-                username: username,
-                password: password
-            }, (err, user) => {
-                if (user) {
-                    res.status(200).send(user);
-                } else {
-                    next(new ApiError("User not found", 404));
-                }
-            }).catch(next);
-    },
     addUser(req, res, next){
         if(req.body.password == req.body.password2){
             delete req.body.password2;

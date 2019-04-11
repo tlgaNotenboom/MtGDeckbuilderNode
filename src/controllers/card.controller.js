@@ -88,7 +88,7 @@ module.exports = {
         })
         .then((foundCard) => {
             if(foundCard != ""){
-                return Card.findOneAndDelete(foundCard._id)  
+                return Card.findByIdAndDelete(foundCard._id)  
             }else{
                 throw new ApiError("Invalid ID, card not found", 422);
             }

@@ -5,6 +5,8 @@ const ApiError = require('./src/ApiError')
 const user_routes = require('./src/routes/user.routes')
 const card_routes = require('./src/routes/card.routes')
 const deck_routes = require('./src/routes/deck.routes')
+const auth_routes = require('./src/routes/auth.routes')
+const AuthController = require('./src/controllers/auth.controller')
 const morgan = require('morgan')
 
     if(process.env.NODE_ENV !== 'test'){
@@ -32,10 +34,9 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.use("*", function(req, res, next) {
-    next();
-});
 
+app.use('/api', auth_routes)
+app.all('*', AuthController.validateToken)
 app.use('/api', user_routes);
 app.use('/api', card_routes);
 app.use('/api', deck_routes);
