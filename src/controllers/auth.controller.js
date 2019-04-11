@@ -56,7 +56,8 @@ module.exports = {
     register(req, res, next) {
         const incomingData = req.body;
         console.log('New user requested! - ' + JSON.stringify(incomingData.username));
-
+        if(incomingData.password1 == incomingData.password2 && incomingData.password1 != "")
+        {
         User.create(incomingData.username, incomingData.password)
             .then(user => {
                 //User has been succesfully created
@@ -92,5 +93,11 @@ module.exports = {
                     next();
                 }
             });
+        }else{
+            res.status(400)
+            res.send(new ApiResponse ("Passwords don't match", 400));
+            console.log('Passwords don\'t match')
+            next();
+        }
     }
 }
