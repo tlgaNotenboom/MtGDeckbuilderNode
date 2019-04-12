@@ -58,13 +58,17 @@ module.exports = {
         console.log('New user requested! - ' + JSON.stringify(incomingData.username));
         if(incomingData.password1 == incomingData.password2 && incomingData.password1 != "")
         {
-        User.create(incomingData.username, incomingData.password)
+        const userData =  {"username": incomingData.username, "password": incomingData.password1}
+        User.create(userData)
             .then(user => {
+                console.log("User Created")
                 //User has been succesfully created
                 const payload = {
                     username: user.username,
                     _id: user._id
                 }
+                console.log("!!")
+                console.log(payload)
                 const userInfo = {
                     token: authentication.encodeToken(payload),
                     username: user.username,
@@ -73,7 +77,6 @@ module.exports = {
                 res.status(200).json(userInfo).end();
 
                 console.log('Added new user - ' + user.username);
-                next();
             })
             .catch(err => {
 
