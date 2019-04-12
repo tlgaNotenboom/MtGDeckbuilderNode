@@ -1,5 +1,5 @@
 // Project files
-const ApiResponse = require('../ApiError');
+const ApiError = require('../ApiError');
 const authentication = require('../util/authentication');
 const User = require('../models/user');
 
@@ -13,7 +13,7 @@ module.exports = {
         authentication.decodeToken(token, (err, payload) => {
             if (err) {
                 // Faulty token, throw new ApiError
-                const error = new ApiResponse(err.message || err, 401);
+                const error = new ApiError(err.message || err, 401);
                 next(error);
             } else {
                 // Token is correct
@@ -56,51 +56,56 @@ module.exports = {
     register(req, res, next) {
         const incomingData = req.body;
         console.log('New user requested! - ' + JSON.stringify(incomingData.username));
-        if(incomingData.password1 == incomingData.password2 && incomingData.password1 != "")
-        {
-        const userData =  {"username": incomingData.username, "password": incomingData.password1}
-        User.create(userData)
-            .then(user => {
-                console.log("User Created")
-                //User has been succesfully created
-                const payload = {
-                    username: user.username,
-                    _id: user._id
-                }
-                console.log("!!")
-                console.log(payload)
-                const userInfo = {
-                    token: authentication.encodeToken(payload),
-                    username: user.username,
-                    message: 'You\'ve succesfully registered'
-                }
-                res.status(200).json(userInfo).end();
+        if (incomingData.password1 == incomingData.password2 && incomingData.password1 != "") {
 
-                console.log('Added new user - ' + user.username);
-            })
-            .catch(err => {
+            const userData = {
+                "username": incomingData.username,
+                "password": incomingData.password1
+            }
+            User.find({
+                    username: userData.username
+                })
+                .then((foundUser) => {
+                    if (foundUser.length === 0) {
+                        return User.create(userData)
+                    } else {
+                        throw new ApiError("User '" + userData.username + "' already exists", 409)
+                    }
+                })
+                .then(user => {
+                    console.log("User Created")
+                    //User has been succesfully created
+                    const payload = {
+                        username: user.username,
+                        _id: user._id
+                    }
+                    console.log("!!")
+                    console.log(payload)
+                    const userInfo = {
+                        token: authentication.encodeToken(payload),
+                        username: user.username,
+                        message: 'You\'ve succesfully registered'
+                    }
+                    res.status(200).json(userInfo).end();
 
-                // Check if user already exists (MONGO code 11000)
-                if (err.code === 11000) {
-                    // User already exists
-                    res.status(409);
-                    res.send(new ApiResponse('User already exists', 409));
-                    console.log('User ' + JSON.stringify(incomingData.username) + ' already exists. Responding 409')
-                    next();
-
-                } else {
-                    // Unknown error
-                    res.status(400);
-                    res.send(new ApiResponse("Unknown error", 400));
-                    console.log('Error whilst adding new user - ' + err);
-                    next();
-                }
-            });
-        }else{
+                    console.log('Added new user - ' + user.username);
+                })
+                .catch(err => {
+                    if (err.code === 409) {
+                        // User already exists
+                        res.status(409)
+                        res.send(err)
+                    } else {
+                        // Unknown error
+                        res.status(400);
+                        res.send(new ApiError("Unknown error", 400));
+                        console.log('Error whilst adding new user - ' + err);
+                    }
+                });
+        } else {
             res.status(400)
-            res.send(new ApiResponse ("Passwords don't match", 400));
+            res.send(new ApiError("Passwords don't match", 400));
             console.log('Passwords don\'t match')
-            next();
         }
     }
 }
