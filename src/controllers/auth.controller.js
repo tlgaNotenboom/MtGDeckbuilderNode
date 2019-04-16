@@ -86,7 +86,8 @@ module.exports = {
                         username: user.username,
                         message: 'You\'ve succesfully registered'
                     }
-                    res.status(200).json(userInfo).send(userInfo);
+                    res.status(200).json(userInfo)
+                    res.send()
                     console.log('Added new user - ' + user.username);
                 })
                 .catch(err => {
