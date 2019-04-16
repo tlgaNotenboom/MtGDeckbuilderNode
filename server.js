@@ -23,7 +23,7 @@ const port = process.env.PORT || 3000
 
 let app = express();
 
-app.use(cors)
+
 
 app.use(bodyParser.json())
 
@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 });
-
+app.use(cors)
 
 app.use('/api', auth_routes)
 app.all('*', AuthController.validateToken)
