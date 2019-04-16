@@ -8,7 +8,7 @@ const deck_routes = require('./src/routes/deck.routes')
 const auth_routes = require('./src/routes/auth.routes')
 const AuthController = require('./src/controllers/auth.controller')
 const morgan = require('morgan')
-const cors = require('cors')
+var cors = require('cors')
 
     if(process.env.NODE_ENV !== 'test'){
 		console.log("Mongoose is connected to production Atlas remote DB")
@@ -23,7 +23,7 @@ const port = process.env.PORT || 3000
 
 let app = express();
 
-
+app.use(cors())
 
 app.use(bodyParser.json())
 
@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 });
-app.use(cors)
+
 
 app.use('/api', auth_routes)
 app.all('*', AuthController.validateToken)
