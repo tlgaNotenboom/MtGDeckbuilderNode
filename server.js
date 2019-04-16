@@ -8,6 +8,7 @@ const deck_routes = require('./src/routes/deck.routes')
 const auth_routes = require('./src/routes/auth.routes')
 const AuthController = require('./src/controllers/auth.controller')
 const morgan = require('morgan')
+const cors = require('cors')
 
     if(process.env.NODE_ENV !== 'test'){
 		console.log("Mongoose is connected to production Atlas remote DB")
@@ -21,6 +22,8 @@ Mongoose.connection
 const port = process.env.PORT || 3000
 
 let app = express();
+
+app.use(cors)
 
 app.use(bodyParser.json())
 
