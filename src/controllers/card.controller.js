@@ -86,9 +86,11 @@ module.exports = {
         Card.find({
             _id: cardId
         })
-        .then((foundCard) => {
-            if(foundCard != ""){
-                return Card.findByIdAndDelete(foundCard._id)  
+        .then((foundCards) => {
+            console.log("Foundcard: ")
+            console.log(foundCards)
+            if(foundCards != ""){
+                return Card.findByIdAndDelete(foundCards[0]._id)  
             }else{
                 throw new ApiError("Invalid ID, card not found", 422);
             }
