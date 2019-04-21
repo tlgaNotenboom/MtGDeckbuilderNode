@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const User = mongoose.model('user')
 
 describe('Getting cards', () => {
-    it.only('should return status 200 when a user is successfully added', done => {
+    it('should return status 200 when a user is successfully added', done => {
         request(app)
             .post('/api/login')
             .send({
