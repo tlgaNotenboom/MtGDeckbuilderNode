@@ -83,13 +83,12 @@ module.exports = {
     },
     removeCard(req, res, next){
         let cardId = req.params.id
+        console.log("Before card.find")
         Card.find({
             _id: cardId
         })
         .then((foundCards) => {
-            console.log("Foundcard: ")
-            console.log(foundCards)
-            if(foundCards != ""){
+            if(foundCards.length != 0){
                 return Card.findByIdAndDelete(foundCards[0]._id)  
             }else{
                 throw new ApiError("Invalid ID, card not found", 422);
@@ -98,6 +97,14 @@ module.exports = {
         .then(() => {
             res.status(200).send("Card successfully deleted!")
         })
-        .catch(next)
+        .catch((err) => {
+            console.log("err:")
+            console.log(err)
+            if(err.name == 'CastError'){
+                next(new ApiError("Invalid ID, card not found", 422))
+            }else{
+                next(err)
+            } 
+        })
     }
 }

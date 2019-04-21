@@ -8,6 +8,7 @@ describe('Getting users', ()=>{
     it('should return all users in the database', done =>{
         request(app)
         .get('/api/user')
+        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTY2NDQ4MDUsImlhdCI6MTU1NTc4MDgwNSwic3ViIjp7InVzZXJuYW1lIjoieHkiLCJfaWQiOiI1Y2IwNTQ1ZTE1YTYyNzIzM2NiNDNhZTAifX0.KUJFAK9HPrsQjLUGGh6Zh68tUjce5WctsEGf4-m65XM')
         .end((err, res)=>{
             User.find()
             .then((foundUsers)=>{
@@ -20,15 +21,32 @@ describe('Getting users', ()=>{
             })
         })
     })
+    it('should need an x-access-token', done =>{
+        request(app)
+        .get('/api/user')
+        .end((err, res)=>{
+            User.find()
+            .then(()=>{
+                assert(res.status === 401)
+                assert(res.body.error == "No token supplied")
+                done()
+            })
+            .catch((err) => {
+                done(err)
+            })
+        })
+    })
+
 
 }),
-describe('Creating users', () =>{
+describe('Registering a users', () =>{
     it('should return status 200 when a user is successfully added', done =>{
         request(app)
-        .post('/api/user')
+        .post('/api/register')
         .send({
             username: "createdTestUser",
-            password: "createdTestUser"
+            password1:"createdTestUser",
+            password2:"createdTestUser"
             })
         .end((err, res) => {
             User.find({
@@ -36,6 +54,7 @@ describe('Creating users', () =>{
                 password: "createdTestUser"
             })
             .then((foundUsers)=> {
+                console.log(foundUsers)
                 assert(foundUsers.length === 1)
                 assert(res.status === 200)
                 done()
@@ -44,7 +63,7 @@ describe('Creating users', () =>{
                 done(err)
             })
         })
-    })
+    }),
     it('Should throw a status 409 if the username is already taken', done => {
         request(app)
         .post('/api/user')
@@ -66,7 +85,7 @@ describe('Creating users', () =>{
             })
         })
     })
-    it('Should throw a status 500 if the password is invalid', done => {
+    it('Should throw a status 400 if the password is invalid', done => {
         request(app)
         .post('/api/user')
         .send({
@@ -80,7 +99,7 @@ describe('Creating users', () =>{
             })
             .then((foundUsers)=> {
                 assert(foundUsers.length === 0)
-                assert(res.status === 500)
+                assert(res.status === 401)
                 done()
             })
             .catch((err) => {
@@ -97,8 +116,8 @@ describe('Deleting users', () =>{
         .then((user) =>{
             return request(app)
             .delete("/api/user")
+            .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTY2NDQ4MDUsImlhdCI6MTU1NTc4MDgwNSwic3ViIjp7InVzZXJuYW1lIjoieHkiLCJfaWQiOiI1Y2IwNTQ1ZTE1YTYyNzIzM2NiNDNhZTAifX0.KUJFAK9HPrsQjLUGGh6Zh68tUjce5WctsEGf4-m65XM')
             .send({ 
-                _id: user._id,
                 username: user.username,
                 password: user.password
              })

@@ -33,10 +33,8 @@ module.exports = {
                 next(err)
             })
         }else{
-            throw new ApiError("Passwords do not match", 400)
-            .catch((err)=>{
-                next(err)
-            })
+            let err = new ApiError("Passwords do not match", 400)
+            next(err)
         }
     },
     editUser(req, res, next){
@@ -76,18 +74,21 @@ module.exports = {
             username: userProps.username,
             password: userProps.password
         })
-        .then((foundUser) => {
-            if(foundUser != ""){
-                console.log(foundUser)
-                while(foundUser.decks.length != 0){
-                    Deck.findOneAndDelete(foundUser.decks[0]._id)
+        .then((foundUsers) => {
+            if(foundUsers != ""){
+                console.log(foundUsers)
+                if(foundUsers.decks != undefined){
+                    while(foundUsers.decks.length != 0){
+                        Deck.findOneAndDelete(foundUsers.decks[0]._id)
+                    }
                 }
-                return User.findOneAndDelete(foundUser._id)
+                return User.findByIdAndDelete(foundUsers[0]._id)
             }else{
                 throw new ApiError("User not found", 404);
             }
         })
-        .then(() => {
+        .then((user) => {
+            console.log(user)
             res.status(200).send("User successfully deleted!")
         })
         .catch((err) => {
